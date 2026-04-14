@@ -33,8 +33,10 @@ namespace tc
             auto lbl_icon = new QLabel(this);
             lbl_icon->setFixedSize(size, size);
             lbl_icon->setScaledContents(true);
-            auto p = grApp->GetSkin()->GetSquareLogo();
-            lbl_icon->setPixmap(p);
+            if (const auto sk = grApp->GetSkin(); sk) {
+                auto p = sk->GetSquareLogo();
+                lbl_icon->setPixmap(p);
+            }
             root_layout->addSpacing(60);
 
             auto layout = new NoMarginHLayout();

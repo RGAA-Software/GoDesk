@@ -263,7 +263,7 @@ namespace tc
                 layout->addWidget(btn, 0, Qt::AlignHCenter);
             }
 
-            if (skin_->IsGameEnabled()) {
+            if (skin_ && skin_->IsGameEnabled()) {
                 auto btn = new CustomTabBtn(AppColors::kTabBtnInActiveColor, AppColors::kTabBtnHoverColor, this);
                 btn->AddIcon(":/resources/image/ic_game_selected.svg", ":/resources/image/ic_game_normal.svg", 20, 20);
                 btn_tab_games_ = btn;
@@ -278,7 +278,7 @@ namespace tc
                 layout->addWidget(btn, 0, Qt::AlignHCenter);
             }
 
-            if (skin_->IsCoPhoneEnabled()) {
+            if (skin_ && skin_->IsCoPhoneEnabled()) {
                 auto btn = new CustomTabBtn(AppColors::kTabBtnInActiveColor, AppColors::kTabBtnHoverColor, this);
                 btn->AddIcon(":/resources/image/ic_device_selected.svg", ":/resources/image/ic_device_normal.svg", 20, 20);
                 btn_tab_cophone_ = btn;
@@ -448,8 +448,10 @@ namespace tc
             {
                 auto lbl = new QLabel(this);
                 lbl->setFixedSize(190, 40);
-                auto p = skin_->GetLargeIconTextLogo();
-                lbl->setPixmap(p);
+                if (skin_) {
+                    auto p = skin_->GetLargeIconTextLogo();
+                    lbl->setPixmap(p);
+                }
                 layout->addSpacing(8);
                 layout->addWidget(lbl, 0, Qt::AlignHCenter);
                 layout->addSpacing(8);
@@ -467,10 +469,10 @@ namespace tc
             // tabs
             tabs_.insert({TabName::kTabServer, new TabServer(app_, this)});
             tabs_.insert({TabName::kTabServerStatus, new TabServerStatus(app_, this)});
-            if (skin_->IsGameEnabled()) {
+            if (skin_ && skin_->IsGameEnabled()) {
                 tabs_.insert({TabName::kTabGames, new TabGame(app_, this)});
             }
-            if (skin_->IsCoPhoneEnabled()) {
+            if (skin_ && skin_->IsCoPhoneEnabled()) {
                 tabs_.insert({TabName::kTabCoPhone, new TabCoPhone(app_, this)});
             }
             tabs_.insert({TabName::kTabSettings, new TabSettings(app_, this)});
@@ -480,10 +482,10 @@ namespace tc
 
             tabs_[TabName::kTabServer]->SetAttach(btn_tab_server_);
             tabs_[TabName::kTabServerStatus]->SetAttach(btn_tab_server_status_);
-            if (skin_->IsGameEnabled()) {
+            if (skin_ && skin_->IsGameEnabled()) {
                 tabs_[TabName::kTabGames]->SetAttach(btn_tab_games_);
             }
-            if (skin_->IsCoPhoneEnabled()) {
+            if (skin_ && skin_->IsCoPhoneEnabled()) {
                 tabs_[TabName::kTabCoPhone]->SetAttach(btn_tab_cophone_);
             }
             tabs_[TabName::kTabSettings]->SetAttach(btn_tab_settings_);
@@ -496,10 +498,10 @@ namespace tc
             auto stack_widget = new QStackedWidget(this);
             stack_widget->addWidget(tabs_[TabName::kTabServer]);
             stack_widget->addWidget(tabs_[TabName::kTabServerStatus]);
-            if (skin_->IsGameEnabled()) {
+            if (skin_ && skin_->IsGameEnabled()) {
                 stack_widget->addWidget(tabs_[TabName::kTabGames]);
             }
-            if (skin_->IsCoPhoneEnabled()) {
+            if (skin_ && skin_->IsCoPhoneEnabled()) {
                 stack_widget->addWidget(tabs_[TabName::kTabCoPhone]);
             }
             stack_widget->addWidget(tabs_[TabName::kTabSettings]);
